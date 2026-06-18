@@ -622,7 +622,7 @@
         }
 
         // ==============================================================
-        //  PDF - CON GRÁFICAS MUCHO MÁS PEQUEÑAS
+        //  PDF - CON GRÁFICAS PEQUEÑAS Y LEYENDAS
         // ==============================================================
         async function descargarPDF() {
             if (!ultimoResultado) {
@@ -688,23 +688,42 @@
                         <strong>Escala:</strong> S (5) Sobresaliente · E (4) Excelente · B (3) Bueno · R (2) Regular · D (1) Deficiente
                     </div>
                     
-                    <!-- GRÁFICAS MUCHO MÁS PEQUEÑAS -->
+                    <!-- GRÁFICAS CON LEYENDAS -->
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:3px;">
                         <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">RADAR</p>
-                            <canvas id="pdfRadar" width="200" height="120"></canvas>
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">RADAR · COMPETENCIAS</p>
+                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
+                                <span>● Metas</span>
+                                <span>● Personas</span>
+                                <span>● Competencias</span>
+                                <span>● Responsabilidad</span>
+                            </div>
+                            <canvas id="pdfRadar" width="200" height="110"></canvas>
                         </div>
                         <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">METAS</p>
-                            <canvas id="pdfBar" width="200" height="120"></canvas>
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">METAS · BARRA</p>
+                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
+                                <span>■ Cumplimiento Metas</span>
+                            </div>
+                            <canvas id="pdfBar" width="200" height="110"></canvas>
                         </div>
                         <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">ANILLO</p>
-                            <canvas id="pdfDonut" width="200" height="120"></canvas>
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">ANILLO · SATISFACCIÓN</p>
+                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
+                                <span>● Excelente</span>
+                                <span>● Bueno</span>
+                                <span>● Regular</span>
+                                <span>● Deficiente</span>
+                            </div>
+                            <canvas id="pdfDonut" width="200" height="110"></canvas>
                         </div>
                         <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">TERMÓMETRO</p>
-                            <canvas id="pdfGauge" width="200" height="120"></canvas>
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">TERMÓMETRO · GESTIÓN</p>
+                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
+                                <span>● Ejecución</span>
+                                <span>● Restante</span>
+                            </div>
+                            <canvas id="pdfGauge" width="200" height="110"></canvas>
                         </div>
                     </div>
                     
@@ -714,7 +733,7 @@
                 `;
                 document.body.appendChild(pdfContainer);
 
-                // Renderizar gráficas en PDF con tamaño muy pequeño
+                // Renderizar gráficas en PDF con leyendas
                 const radarCtx = document.getElementById('pdfRadar').getContext('2d');
                 const barCtx = document.getElementById('pdfBar').getContext('2d');
                 const donutCtx = document.getElementById('pdfDonut').getContext('2d');
