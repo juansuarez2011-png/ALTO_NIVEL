@@ -126,7 +126,7 @@
         <div class="fecha-demo">📅 <span id="fechaActual"></span></div>
     </div>
 
-    <!-- DATOS PERSONALES - SIN FECHA DE EVALUACIÓN -->
+    <!-- DATOS PERSONALES -->
     <div class="datos-personales" id="datosEvaluado">
         <div class="campo"><label>👤 Nombre del Colaborador</label><input type="text" id="nombreInput" placeholder="Nombre completo"></div>
         <div class="campo"><label>🪪 Cédula / ID</label><input type="text" id="cedulaInput" placeholder="V-12345678"></div>
@@ -134,7 +134,7 @@
         <div class="campo"><label>📋 Perfil Evaluador</label>
             <select id="perfilSelect">
                 <option value="Presidente">Presidente</option>
-               
+                <option value="Director">Director</option>
             </select>
         </div>
         <div class="campo" style="grid-column: span 1;"><label>🏢 Unidad / Dependencia</label><input type="text" id="unidadInput" placeholder="Dirección de Operaciones / Administración / OAC"></div>
@@ -415,7 +415,10 @@
             });
             tablaBody.innerHTML = tablaHtml;
             notaGlobal.textContent = notaFinal.toFixed(2);
-            nivelConcepto.textContent = nivelConceptoText(notaFinal) + ` (${nivelFinal})`;
+            // Solo mostrar el nivel una vez (sin duplicar)
+            const nivelTexto = nivelConceptoText(notaFinal);
+            nivelConcepto.textContent = nivelTexto;
+
             puntajeTotal.textContent = notaFinal.toFixed(2);
             zonaNombre.textContent = zona.zona;
             recomendacion.textContent = zona.recomendacion;
@@ -620,7 +623,7 @@
         }
 
         // ==============================================================
-        //  PDF
+        //  PDF - CON GRÁFICAS COMPLETAS Y SIN DUPLICADOS
         // ==============================================================
         async function descargarPDF() {
             if (!ultimoResultado) {
@@ -634,6 +637,7 @@
             const unidad = unidadInput.value.trim() || 'Sin unidad';
             const perfil = perfilSelect.value;
             const fecha = new Date().toLocaleDateString('es-ES');
+            const nivelTexto = nivelConcepto.textContent;
 
             const historialSection = document.getElementById('historialSection');
             const originalDisplay = historialSection.style.display;
@@ -643,7 +647,7 @@
 
             try {
                 const pdfContainer = document.createElement('div');
-                pdfContainer.style.cssText = 'padding:25px; background:white; width:800px; font-family:Segoe UI, sans-serif; margin:0 auto;';
+                pdfContainer.style.cssText = 'padding:25px; background:white; width:850px; font-family:Segoe UI, sans-serif; margin:0 auto;';
                 pdfContainer.innerHTML = `
                     <div style="display:flex; align-items:center; gap:15px; border-bottom:3px solid #1a5a3a; padding-bottom:12px; margin-bottom:15px;">
                         <div style="width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; border:4px solid #e8c84a; background:transparent; flex-shrink:0;">
@@ -659,24 +663,24 @@
                         </div>
                     </div>
                     
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px 20px; margin:10px 0; font-size:0.75rem; background:#f5f9f6; padding:10px 16px; border-radius:8px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px 15px; margin:10px 0; font-size:0.75rem; background:#f5f9f6; padding:10px 16px; border-radius:8px;">
                         <div><strong>Nombre:</strong> ${nombre}</div>
                         <div><strong>Cédula:</strong> ${cedula}</div>
                         <div><strong>Cargo Evaluado:</strong> ${cargo}</div>
                         <div><strong>Perfil Evaluador:</strong> ${perfil}</div>
-                        <div><strong>Unidad/Dependencia:</strong> ${unidad}</div>
+                        <div style="grid-column: span 2;"><strong>Unidad/Dependencia:</strong> ${unidad}</div>
                     </div>
                     
                     <table style="width:100%; border-collapse:collapse; margin:8px 0; font-size:0.75rem;">
-                        <thead><tr style="background:#1a5a3a; color:white;"><th style="padding:5px 8px;text-align:left;">Factor</th><th style="padding:5px 8px;text-align:center;">Peso</th><th style="padding:5px 8px;text-align:center;">Nivel</th><th style="padding:5px 8px;text-align:center;">Valor</th></tr></thead>
+                        <thead><tr style="background:#1a5a3a; color:white;"><th style="padding:5px 10px;text-align:left;">Factor</th><th style="padding:5px 10px;text-align:center;">Peso</th><th style="padding:5px 10px;text-align:center;">Nivel</th><th style="padding:5px 10px;text-align:center;">Valor</th></tr></thead>
                         <tbody>
-                            ${ultimoResultado.resultados.map(r => `<tr><td style="padding:4px 8px;border-bottom:1px solid #eee;">${r.label}</td><td style="padding:4px 8px;border-bottom:1px solid #eee;text-align:center;">${r.peso}%</td><td style="padding:4px 8px;border-bottom:1px solid #eee;text-align:center;">${r.nivel}</td><td style="padding:4px 8px;border-bottom:1px solid #eee;text-align:center;">${r.promedio.toFixed(2)}</td></tr>`).join('')}
+                            ${ultimoResultado.resultados.map(r => `<tr><td style="padding:4px 10px;border-bottom:1px solid #eee;">${r.label}</td><td style="padding:4px 10px;border-bottom:1px solid #eee;text-align:center;">${r.peso}%</td><td style="padding:4px 10px;border-bottom:1px solid #eee;text-align:center;">${r.nivel}</td><td style="padding:4px 10px;border-bottom:1px solid #eee;text-align:center;">${r.promedio.toFixed(2)}</td></tr>`).join('')}
                         </tbody>
                     </table>
                     
-                    <div style="background:#e8f5ee; padding:8px 14px; border-radius:10px; display:flex; justify-content:space-between; flex-wrap:wrap; margin:8px 0; border-left:4px solid #1a5a3a; font-size:0.75rem;">
+                    <div style="background:#e8f5ee; padding:8px 14px; border-radius:10px; display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; margin:8px 0; border-left:4px solid #1a5a3a; font-size:0.75rem;">
                         <span><strong>Puntaje Total:</strong> ${ultimoResultado.notaFinal.toFixed(2)}</span>
-                        <span><strong>Nivel:</strong> ${nivelConcepto.textContent}</span>
+                        <span><strong>Nivel:</strong> ${nivelTexto}</span>
                         <span><strong>Zona:</strong> ${ultimoResultado.zona.zona}</span>
                         <span><strong>Recomendación:</strong> ${ultimoResultado.zona.recomendacion}</span>
                     </div>
@@ -685,22 +689,23 @@
                         <strong>Escala:</strong> S (5) Sobresaliente · E (4) Excelente · B (3) Bueno · R (2) Regular · D (1) Deficiente
                     </div>
                     
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:5px; background:white;">
-                            <p style="text-align:center; font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">RADAR · COMPETENCIAS</p>
-                            <canvas id="pdfRadar" width="250" height="170"></canvas>
+                    <!-- GRÁFICAS: 2 arriba y 2 abajo, bien distribuidas -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
+                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">RADAR · COMPETENCIAS</p>
+                            <canvas id="pdfRadar" width="280" height="190"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:5px; background:white;">
-                            <p style="text-align:center; font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">METAS · BARRA</p>
-                            <canvas id="pdfBar" width="250" height="170"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
+                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">METAS · BARRA</p>
+                            <canvas id="pdfBar" width="280" height="190"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:5px; background:white;">
-                            <p style="text-align:center; font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">ANILLO · SATISFACCIÓN</p>
-                            <canvas id="pdfDonut" width="250" height="170"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
+                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">ANILLO · SATISFACCIÓN</p>
+                            <canvas id="pdfDonut" width="280" height="190"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:5px; background:white;">
-                            <p style="text-align:center; font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">TERMÓMETRO · GESTIÓN</p>
-                            <canvas id="pdfGauge" width="250" height="170"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
+                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">TERMÓMETRO · GESTIÓN</p>
+                            <canvas id="pdfGauge" width="280" height="190"></canvas>
                         </div>
                     </div>
                     
@@ -710,6 +715,7 @@
                 `;
                 document.body.appendChild(pdfContainer);
 
+                // Renderizar gráficas en PDF
                 const radarCtx = document.getElementById('pdfRadar').getContext('2d');
                 const barCtx = document.getElementById('pdfBar').getContext('2d');
                 const donutCtx = document.getElementById('pdfDonut').getContext('2d');
