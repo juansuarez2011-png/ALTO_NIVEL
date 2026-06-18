@@ -622,7 +622,7 @@
         }
 
         // ==============================================================
-        //  PDF - CON GRÁFICAS MÁS PEQUEÑAS PARA QUE TODO QUEPA EN UNA HOJA
+        //  PDF - CON GRÁFICAS MUCHO MÁS PEQUEÑAS
         // ==============================================================
         async function descargarPDF() {
             if (!ultimoResultado) {
@@ -646,75 +646,75 @@
 
             try {
                 const pdfContainer = document.createElement('div');
-                pdfContainer.style.cssText = 'padding:20px; background:white; width:750px; font-family:Segoe UI, sans-serif; margin:0 auto;';
+                pdfContainer.style.cssText = 'padding:18px; background:white; width:720px; font-family:Segoe UI, sans-serif; margin:0 auto;';
                 pdfContainer.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:12px; border-bottom:2px solid #1a5a3a; padding-bottom:8px; margin-bottom:10px;">
-                        <div style="width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; border:3px solid #e8c84a; background:transparent; flex-shrink:0;">
+                    <div style="display:flex; align-items:center; gap:10px; border-bottom:2px solid #1a5a3a; padding-bottom:6px; margin-bottom:8px;">
+                        <div style="width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; border:3px solid #e8c84a; background:transparent; flex-shrink:0;">
                             <img src="${logoImg.src}" alt="IMDAA" style="width:100%; height:100%; object-fit:contain;">
                         </div>
                         <div>
-                            <h2 style="color:#1a5a3a; margin:0; font-size:1rem;">INSTITUTO MUNICIPAL DE DESARROLLO AGROPECUARIO Y AFINES (IMDAA)</h2>
-                            <p style="color:#2f5b74; font-size:0.6rem; margin:1px 0;">EVALUACIÓN DEL DESEMPEÑO - NIVEL DIRECTIVO Y ALTO NIVEL</p>
-                            <p style="color:#2f5b74; font-size:0.5rem; margin:0;">G-20004428-4</p>
+                            <h2 style="color:#1a5a3a; margin:0; font-size:0.85rem;">INSTITUTO MUNICIPAL DE DESARROLLO AGROPECUARIO Y AFINES (IMDAA)</h2>
+                            <p style="color:#2f5b74; font-size:0.5rem; margin:1px 0;">EVALUACIÓN DEL DESEMPEÑO - NIVEL DIRECTIVO Y ALTO NIVEL</p>
+                            <p style="color:#2f5b74; font-size:0.45rem; margin:0;">G-20004428-4</p>
                         </div>
-                        <div style="margin-left:auto; font-size:0.55rem; color:#2a5e7a; background:#e8f0f7; padding:3px 10px; border-radius:40px;">
+                        <div style="margin-left:auto; font-size:0.5rem; color:#2a5e7a; background:#e8f0f7; padding:2px 8px; border-radius:40px;">
                             ${fecha}
                         </div>
                     </div>
                     
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px 12px; margin:6px 0; font-size:0.65rem; background:#f5f9f6; padding:6px 12px; border-radius:6px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px 10px; margin:4px 0; font-size:0.55rem; background:#f5f9f6; padding:4px 10px; border-radius:4px;">
                         <div><strong>Nombre:</strong> ${nombre}</div>
                         <div><strong>Cédula:</strong> ${cedula}</div>
-                        <div><strong>Cargo Evaluado:</strong> ${cargo}</div>
-                        <div><strong>Perfil Evaluador:</strong> ${perfil}</div>
-                        <div style="grid-column: span 2;"><strong>Unidad/Dependencia:</strong> ${unidad}</div>
+                        <div><strong>Cargo:</strong> ${cargo}</div>
+                        <div><strong>Perfil:</strong> ${perfil}</div>
+                        <div style="grid-column: span 2;"><strong>Unidad:</strong> ${unidad}</div>
                     </div>
                     
-                    <table style="width:100%; border-collapse:collapse; margin:5px 0; font-size:0.65rem;">
-                        <thead><tr style="background:#1a5a3a; color:white;"><th style="padding:3px 8px;text-align:left;">Factor</th><th style="padding:3px 8px;text-align:center;">Peso</th><th style="padding:3px 8px;text-align:center;">Nivel</th><th style="padding:3px 8px;text-align:center;">Valor</th></tr></thead>
+                    <table style="width:100%; border-collapse:collapse; margin:4px 0; font-size:0.55rem;">
+                        <thead><tr style="background:#1a5a3a; color:white;"><th style="padding:2px 6px;text-align:left;">Factor</th><th style="padding:2px 6px;text-align:center;">Peso</th><th style="padding:2px 6px;text-align:center;">Nivel</th><th style="padding:2px 6px;text-align:center;">Valor</th></tr></thead>
                         <tbody>
-                            ${ultimoResultado.resultados.map(r => `<tr><td style="padding:3px 8px;border-bottom:1px solid #eee;">${r.label}</td><td style="padding:3px 8px;border-bottom:1px solid #eee;text-align:center;">${r.peso}%</td><td style="padding:3px 8px;border-bottom:1px solid #eee;text-align:center;">${r.nivel}</td><td style="padding:3px 8px;border-bottom:1px solid #eee;text-align:center;">${r.promedio.toFixed(2)}</td></tr>`).join('')}
+                            ${ultimoResultado.resultados.map(r => `<tr><td style="padding:2px 6px;border-bottom:1px solid #eee;">${r.label}</td><td style="padding:2px 6px;border-bottom:1px solid #eee;text-align:center;">${r.peso}%</td><td style="padding:2px 6px;border-bottom:1px solid #eee;text-align:center;">${r.nivel}</td><td style="padding:2px 6px;border-bottom:1px solid #eee;text-align:center;">${r.promedio.toFixed(2)}</td></tr>`).join('')}
                         </tbody>
                     </table>
                     
-                    <div style="background:#e8f5ee; padding:5px 12px; border-radius:8px; display:grid; grid-template-columns:1fr 1fr; gap:2px 15px; margin:5px 0; border-left:3px solid #1a5a3a; font-size:0.65rem;">
-                        <span><strong>Puntaje Total:</strong> ${ultimoResultado.notaFinal.toFixed(2)}</span>
+                    <div style="background:#e8f5ee; padding:4px 10px; border-radius:6px; display:grid; grid-template-columns:1fr 1fr; gap:2px 12px; margin:4px 0; border-left:3px solid #1a5a3a; font-size:0.55rem;">
+                        <span><strong>Puntaje:</strong> ${ultimoResultado.notaFinal.toFixed(2)}</span>
                         <span><strong>Nivel:</strong> ${nivelTexto}</span>
                         <span style="grid-column: span 2;"><strong>Zona:</strong> ${ultimoResultado.zona.zona}</span>
                         <span style="grid-column: span 2;"><strong>Recomendación:</strong> ${ultimoResultado.zona.recomendacion}</span>
                     </div>
                     
-                    <div style="text-align:center; font-size:0.5rem; color:#2a5e7a; margin:3px 0 5px; background:#f0f5f9; padding:2px; border-radius:4px;">
+                    <div style="text-align:center; font-size:0.45rem; color:#2a5e7a; margin:2px 0 4px; background:#f0f5f9; padding:2px; border-radius:4px;">
                         <strong>Escala:</strong> S (5) Sobresaliente · E (4) Excelente · B (3) Bueno · R (2) Regular · D (1) Deficiente
                     </div>
                     
-                    <!-- GRÁFICAS MÁS PEQUEÑAS: 2 arriba y 2 abajo -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:4px;">
-                        <div style="border:1px solid #e6edf5; border-radius:6px; padding:4px; background:white; text-align:center;">
-                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">RADAR · COMPETENCIAS</p>
-                            <canvas id="pdfRadar" width="280" height="170"></canvas>
+                    <!-- GRÁFICAS MUCHO MÁS PEQUEÑAS -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:3px;">
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">RADAR</p>
+                            <canvas id="pdfRadar" width="200" height="120"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:6px; padding:4px; background:white; text-align:center;">
-                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">METAS · BARRA</p>
-                            <canvas id="pdfBar" width="280" height="170"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">METAS</p>
+                            <canvas id="pdfBar" width="200" height="120"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:6px; padding:4px; background:white; text-align:center;">
-                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">ANILLO · SATISFACCIÓN</p>
-                            <canvas id="pdfDonut" width="280" height="170"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">ANILLO</p>
+                            <canvas id="pdfDonut" width="200" height="120"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:6px; padding:4px; background:white; text-align:center;">
-                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">TERMÓMETRO · GESTIÓN</p>
-                            <canvas id="pdfGauge" width="280" height="170"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
+                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">TERMÓMETRO</p>
+                            <canvas id="pdfGauge" width="200" height="120"></canvas>
                         </div>
                     </div>
                     
-                    <div style="text-align:center; font-size:0.45rem; color:#3d6f8a; margin-top:6px; border-top:1px solid #d6e2ed; padding-top:4px;">
+                    <div style="text-align:center; font-size:0.4rem; color:#3d6f8a; margin-top:4px; border-top:1px solid #d6e2ed; padding-top:3px;">
                         Instituto Municipal de Desarrollo Agropecuario y Afines - IMDAA · G-20004428-4
                     </div>
                 `;
                 document.body.appendChild(pdfContainer);
 
-                // Renderizar gráficas en PDF con tamaño más pequeño
+                // Renderizar gráficas en PDF con tamaño muy pequeño
                 const radarCtx = document.getElementById('pdfRadar').getContext('2d');
                 const barCtx = document.getElementById('pdfBar').getContext('2d');
                 const donutCtx = document.getElementById('pdfDonut').getContext('2d');
