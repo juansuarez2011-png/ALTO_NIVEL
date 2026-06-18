@@ -623,7 +623,7 @@
         }
 
         // ==============================================================
-        //  PDF - CON GRÁFICAS COMPLETAS Y SIN DUPLICADOS
+        //  PDF - CON GRÁFICAS MÁS GRANDES Y COMPLETAS
         // ==============================================================
         async function descargarPDF() {
             if (!ultimoResultado) {
@@ -681,41 +681,41 @@
                     <div style="background:#e8f5ee; padding:8px 14px; border-radius:10px; display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; margin:8px 0; border-left:4px solid #1a5a3a; font-size:0.75rem;">
                         <span><strong>Puntaje Total:</strong> ${ultimoResultado.notaFinal.toFixed(2)}</span>
                         <span><strong>Nivel:</strong> ${nivelTexto}</span>
-                        <span><strong>Zona:</strong> ${ultimoResultado.zona.zona}</span>
-                        <span><strong>Recomendación:</strong> ${ultimoResultado.zona.recomendacion}</span>
+                        <span style="grid-column: span 2;"><strong>Zona:</strong> ${ultimoResultado.zona.zona}</span>
+                        <span style="grid-column: span 2;"><strong>Recomendación:</strong> ${ultimoResultado.zona.recomendacion}</span>
                     </div>
                     
                     <div style="text-align:center; font-size:0.6rem; color:#2a5e7a; margin:4px 0 8px; background:#f0f5f9; padding:3px; border-radius:6px;">
                         <strong>Escala:</strong> S (5) Sobresaliente · E (4) Excelente · B (3) Bueno · R (2) Regular · D (1) Deficiente
                     </div>
                     
-                    <!-- GRÁFICAS: 2 arriba y 2 abajo, bien distribuidas -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
-                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">RADAR · COMPETENCIAS</p>
-                            <canvas id="pdfRadar" width="280" height="190"></canvas>
+                    <!-- GRÁFICAS MÁS GRANDES: 2 arriba y 2 abajo -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px;">
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:8px; background:white; text-align:center;">
+                            <p style="font-size:0.6rem; font-weight:600; color:#2a5e7a; margin:0 0 4px 0;">RADAR · COMPETENCIAS</p>
+                            <canvas id="pdfRadar" width="320" height="220"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
-                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">METAS · BARRA</p>
-                            <canvas id="pdfBar" width="280" height="190"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:8px; background:white; text-align:center;">
+                            <p style="font-size:0.6rem; font-weight:600; color:#2a5e7a; margin:0 0 4px 0;">METAS · BARRA</p>
+                            <canvas id="pdfBar" width="320" height="220"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
-                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">ANILLO · SATISFACCIÓN</p>
-                            <canvas id="pdfDonut" width="280" height="190"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:8px; background:white; text-align:center;">
+                            <p style="font-size:0.6rem; font-weight:600; color:#2a5e7a; margin:0 0 4px 0;">ANILLO · SATISFACCIÓN</p>
+                            <canvas id="pdfDonut" width="320" height="220"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:6px; background:white; text-align:center;">
-                            <p style="font-size:0.55rem; font-weight:600; color:#2a5e7a; margin:0 0 3px 0;">TERMÓMETRO · GESTIÓN</p>
-                            <canvas id="pdfGauge" width="280" height="190"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:8px; padding:8px; background:white; text-align:center;">
+                            <p style="font-size:0.6rem; font-weight:600; color:#2a5e7a; margin:0 0 4px 0;">TERMÓMETRO · GESTIÓN</p>
+                            <canvas id="pdfGauge" width="320" height="220"></canvas>
                         </div>
                     </div>
                     
-                    <div style="text-align:center; font-size:0.5rem; color:#3d6f8a; margin-top:10px; border-top:1px solid #d6e2ed; padding-top:6px;">
+                    <div style="text-align:center; font-size:0.5rem; color:#3d6f8a; margin-top:12px; border-top:1px solid #d6e2ed; padding-top:6px;">
                         Instituto Municipal de Desarrollo Agropecuario y Afines - IMDAA · G-20004428-4
                     </div>
                 `;
                 document.body.appendChild(pdfContainer);
 
-                // Renderizar gráficas en PDF
+                // Renderizar gráficas en PDF con tamaño más grande
                 const radarCtx = document.getElementById('pdfRadar').getContext('2d');
                 const barCtx = document.getElementById('pdfBar').getContext('2d');
                 const donutCtx = document.getElementById('pdfDonut').getContext('2d');
