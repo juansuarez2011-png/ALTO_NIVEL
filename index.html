@@ -622,7 +622,7 @@
         }
 
         // ==============================================================
-        //  PDF - CON GRÁFICAS PEQUEÑAS Y LEYENDAS
+        //  PDF - CON LEYENDAS VISIBLES EN LAS GRÁFICAS
         // ==============================================================
         async function descargarPDF() {
             if (!ultimoResultado) {
@@ -646,7 +646,7 @@
 
             try {
                 const pdfContainer = document.createElement('div');
-                pdfContainer.style.cssText = 'padding:18px; background:white; width:720px; font-family:Segoe UI, sans-serif; margin:0 auto;';
+                pdfContainer.style.cssText = 'padding:18px; background:white; width:750px; font-family:Segoe UI, sans-serif; margin:0 auto;';
                 pdfContainer.innerHTML = `
                     <div style="display:flex; align-items:center; gap:10px; border-bottom:2px solid #1a5a3a; padding-bottom:6px; margin-bottom:8px;">
                         <div style="width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:hidden; border:3px solid #e8c84a; background:transparent; flex-shrink:0;">
@@ -688,42 +688,23 @@
                         <strong>Escala:</strong> S (5) Sobresaliente · E (4) Excelente · B (3) Bueno · R (2) Regular · D (1) Deficiente
                     </div>
                     
-                    <!-- GRÁFICAS CON LEYENDAS -->
+                    <!-- GRÁFICAS CON LEYENDAS VISIBLES -->
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:3px;">
-                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">RADAR · COMPETENCIAS</p>
-                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
-                                <span>● Metas</span>
-                                <span>● Personas</span>
-                                <span>● Competencias</span>
-                                <span>● Responsabilidad</span>
-                            </div>
-                            <canvas id="pdfRadar" width="200" height="110"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:4px; background:white; text-align:center;">
+                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">RADAR · COMPETENCIAS</p>
+                            <canvas id="pdfRadar" width="220" height="130"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">METAS · BARRA</p>
-                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
-                                <span>■ Cumplimiento Metas</span>
-                            </div>
-                            <canvas id="pdfBar" width="200" height="110"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:4px; background:white; text-align:center;">
+                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">METAS · BARRA</p>
+                            <canvas id="pdfBar" width="220" height="130"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">ANILLO · SATISFACCIÓN</p>
-                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
-                                <span>● Excelente</span>
-                                <span>● Bueno</span>
-                                <span>● Regular</span>
-                                <span>● Deficiente</span>
-                            </div>
-                            <canvas id="pdfDonut" width="200" height="110"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:4px; background:white; text-align:center;">
+                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">ANILLO · SATISFACCIÓN</p>
+                            <canvas id="pdfDonut" width="220" height="130"></canvas>
                         </div>
-                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:3px; background:white; text-align:center;">
-                            <p style="font-size:0.45rem; font-weight:600; color:#2a5e7a; margin:0 0 1px 0;">TERMÓMETRO · GESTIÓN</p>
-                            <div style="display:flex; justify-content:center; gap:6px; font-size:0.4rem; color:#333; margin-bottom:1px;">
-                                <span>● Ejecución</span>
-                                <span>● Restante</span>
-                            </div>
-                            <canvas id="pdfGauge" width="200" height="110"></canvas>
+                        <div style="border:1px solid #e6edf5; border-radius:4px; padding:4px; background:white; text-align:center;">
+                            <p style="font-size:0.5rem; font-weight:600; color:#2a5e7a; margin:0 0 2px 0;">TERMÓMETRO · GESTIÓN</p>
+                            <canvas id="pdfGauge" width="220" height="130"></canvas>
                         </div>
                     </div>
                     
@@ -733,7 +714,7 @@
                 `;
                 document.body.appendChild(pdfContainer);
 
-                // Renderizar gráficas en PDF con leyendas
+                // Renderizar gráficas en PDF CON LEYENDAS VISIBLES
                 const radarCtx = document.getElementById('pdfRadar').getContext('2d');
                 const barCtx = document.getElementById('pdfBar').getContext('2d');
                 const donutCtx = document.getElementById('pdfDonut').getContext('2d');
@@ -744,10 +725,84 @@
                 const donutData = charts.donut ? charts.donut.data : null;
                 const gaugeData = charts.gauge ? charts.gauge.data : null;
 
-                if (radarData) new Chart(radarCtx, { type: 'radar', data: radarData, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } } });
-                if (barData) new Chart(barCtx, { type: 'bar', data: barData, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { min: 0, max: 5 } } } });
-                if (donutData) new Chart(donutCtx, { type: 'doughnut', data: donutData, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } } });
-                if (gaugeData) new Chart(gaugeCtx, { type: 'doughnut', data: gaugeData, options: { cutout: '75%', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } } });
+                // RADAR CON LEYENDA
+                if (radarData) {
+                    new Chart(radarCtx, { 
+                        type: 'radar', 
+                        data: radarData, 
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: true, 
+                            plugins: { 
+                                legend: { 
+                                    display: true, 
+                                    position: 'bottom',
+                                    labels: { font: { size: 7 }, boxWidth: 8, padding: 4 }
+                                } 
+                            } 
+                        } 
+                    });
+                }
+                
+                // BARRA CON LEYENDA
+                if (barData) {
+                    new Chart(barCtx, { 
+                        type: 'bar', 
+                        data: barData, 
+                        options: { 
+                            indexAxis: 'y', 
+                            responsive: true, 
+                            maintainAspectRatio: true, 
+                            plugins: { 
+                                legend: { 
+                                    display: true, 
+                                    position: 'bottom',
+                                    labels: { font: { size: 7 }, boxWidth: 8, padding: 4 }
+                                } 
+                            }, 
+                            scales: { x: { min: 0, max: 5 } } 
+                        } 
+                    });
+                }
+                
+                // DONUT CON LEYENDA
+                if (donutData) {
+                    new Chart(donutCtx, { 
+                        type: 'doughnut', 
+                        data: donutData, 
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: true, 
+                            plugins: { 
+                                legend: { 
+                                    display: true, 
+                                    position: 'bottom',
+                                    labels: { font: { size: 7 }, boxWidth: 8, padding: 4 }
+                                } 
+                            } 
+                        } 
+                    });
+                }
+                
+                // GAUGE CON LEYENDA
+                if (gaugeData) {
+                    new Chart(gaugeCtx, { 
+                        type: 'doughnut', 
+                        data: gaugeData, 
+                        options: { 
+                            cutout: '75%', 
+                            responsive: true, 
+                            maintainAspectRatio: true, 
+                            plugins: { 
+                                legend: { 
+                                    display: true, 
+                                    position: 'bottom',
+                                    labels: { font: { size: 7 }, boxWidth: 8, padding: 4 }
+                                } 
+                            } 
+                        } 
+                    });
+                }
 
                 setTimeout(async () => {
                     const canvas = await html2canvas(pdfContainer, { scale: 2.5, useCORS: true, backgroundColor: '#ffffff' });
@@ -759,7 +814,7 @@
                     doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
                     doc.save('evaluacion_IMDAA_AltoNivel.pdf');
                     document.body.removeChild(pdfContainer);
-                }, 900);
+                }, 1000);
 
             } catch (error) {
                 console.error('Error generando PDF:', error);
